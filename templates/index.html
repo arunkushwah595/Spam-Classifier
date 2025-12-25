@@ -4,7 +4,7 @@
     <title>Spam Classifier by Arun Kushwah</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body class="{{ result|lower }}-bg">
     <div class="container">
         <h1>SMS / Email Spam Classifier</h1>
         <form method="POST">
@@ -14,7 +14,7 @@
 
         {% if result %}
             <div class="result-box {{ result|lower }}">
-                Result: {{ result }}
+                Result: {{ ans }}
             </div>
         {% endif %}
     </div>

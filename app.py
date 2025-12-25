@@ -14,7 +14,13 @@ def home():
         message = request.form["message"]
         vector = vectorizer.transform([message])
         result = model.predict(vector)[0]
-    return render_template("index.html", result=result)
+        
+    ans="✅ Not-Spam"
+    if(result!="ham"):
+        ans="🚨 Spam"
+    
+    
+    return render_template("index.html", result=result, ans=ans)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
