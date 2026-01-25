@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛡️ SpamGuard - Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body.light-theme {
+            --bg-color: #f8f9fa;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-color: #1a1a2e;
+            --text-light: #666;
+            --border-color: rgba(124, 58, 237, 0.2);
+            --input-bg: #f0f4f8;
+            --input-border: #e0e7ff;
+            --primary-color: #7c3aed;
+            --secondary-color: #3b82f6;
+        }
+
+        body.dark-theme {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.95);
+            --text-color: #f1f5f9;
+            --text-light: #cbd5e1;
+            --border-color: rgba(124, 58, 237, 0.3);
+            --input-bg: #1e293b;
+            --input-border: #334155;
+            --primary-color: #a78bfa;
+            --secondary-color: #60a5fa;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .auth-wrapper {
+            display: flex;
+            min-height: 100vh;
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        /* Left Side - Branding & Features */
+        .auth-branding {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .brand-content {
+            max-width: 500px;
+        }
+
+        .brand-logo {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .brand-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .brand-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .brand-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .brand-feature {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .brand-feature-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            margin-top: 0.2rem;
+        }
+
+        .brand-feature-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+
+        .brand-feature-content p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Right Side - Form */
+        .auth-form-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .auth-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid var(--border-color);
+            animation: slideUp 0.6s ease both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .auth-header-logo {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .auth-header h2 {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+
+        .auth-header p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .form-group-auth {
+            margin-bottom: 1.3rem;
+        }
+
+        .form-group-auth label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-group-auth input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid var(--input-border);
+            border-radius: 10px;
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group-auth input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: var(--input-bg);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .form-group-auth input::placeholder {
+            color: var(--text-light);
+            opacity: 0.7;
+        }
+
+        .error-message {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error-message i {
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .submit-btn-auth {
+            width: 100%;
+            padding: 0.85rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+            margin-bottom: 1.5rem;
+        }
+
+        .submit-btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(124, 58, 237, 0.5);
+        }
+
+        .submit-btn-auth:active {
+            transform: translateY(0);
+        }
+
+        .auth-footer {
+            text-align: center;
+        }
+
+        .auth-footer p {
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+        }
+
+        .auth-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .auth-footer a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .password-requirements {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .password-requirements h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        .password-requirements ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .password-requirements li {
+            padding: 0.3rem 0 0.3rem 1.5rem;
+            position: relative;
+        }
+
+        .password-requirements li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+
+        .theme-toggle-auth {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .theme-toggle-auth:hover {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .auth-wrapper {
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .auth-branding {
+                display: none;
+            }
+
+            .auth-form-wrapper {
+                padding: 1rem;
+                flex: 1;
+            }
+
+            .auth-card {
+                padding: 2.5rem 2rem;
+            }
+
+            .brand-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .auth-wrapper {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .auth-form-wrapper {
+                padding: 1rem 0;
+            }
+
+            .auth-card {
+                max-width: 100%;
+            }
+
+            .theme-toggle-auth {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+
+            .password-requirements {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <button class="theme-toggle-auth" id="themeToggleAuth" title="Toggle theme">
+        <i class="fas fa-sun"></i>
+    </button>
+
+    <div class="auth-wrapper">
+        <!-- Left Side - Branding -->
+        <div class="auth-branding">
+            <div class="brand-content">
+                <div class="brand-logo">🛡️</div>
+                <div class="brand-title">SpamGuard</div>
+                <div class="brand-subtitle">AI-Powered Email & SMS Protection</div>
+
+                <div class="brand-features">
+                    <div class="brand-feature">
+                        <div class="brand-feature-icon">⚡</div>
+                        <div class="brand-feature-content">
+                            <h4>Instant Detection</h4>
+                            <p>Analyze messages in milliseconds</p>
+                        </div>
+                    </div>
+                    <div class="brand-feature">
+                        <div class="brand-feature-icon">🧠</div>
+                        <div class="brand-feature-content">
+                            <h4>AI-Powered</h4>
+                            <p>Trained on 61,690+ real samples</p>
+                        </div>
+                    </div>
+                    <div class="brand-feature">
+                        <div class="brand-feature-icon">🔒</div>
+                        <div class="brand-feature-content">
+                            <h4>100% Private</h4>
+                            <p>Your data stays with you</p>
+                        </div>
+                    </div>
+                    <div class="brand-feature">
+                        <div class="brand-feature-icon">✅</div>
+                        <div class="brand-feature-content">
+                            <h4>95.79% Accurate</h4>
+                            <p>Industry-leading precision</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Register Form -->
+        <div class="auth-form-wrapper">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="auth-header-logo">🛡️</div>
+                    <h2>Join SpamGuard</h2>
+                    <p>Create your account and start protecting your inbox</p>
+                </div>
+
+                {% if error %}
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>{{ error }}</span>
+                    </div>
+                {% endif %}
+
+                <form method="POST">
+                    <div class="form-group-auth">
+                        <label for="username">Username</label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username" 
+                            placeholder="Choose a unique username" 
+                            required
+                            autofocus>
+                    </div>
+
+                    <div class="form-group-auth">
+                        <label for="email">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="your@email.com" 
+                            required>
+                    </div>
+
+                    <div class="form-group-auth">
+                        <label for="password">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Create a strong password" 
+                            required>
+                    </div>
+
+                    <div class="form-group-auth">
+                        <label for="confirm_password">Confirm Password</label>
+                        <input 
+                            type="password" 
+                            id="confirm_password" 
+                            name="confirm_password" 
+                            placeholder="Re-enter your password" 
+                            required>
+                    </div>
+
+                    <div class="password-requirements">
+                        <h4>Password Tips:</h4>
+                        <ul>
+                            <li>At least 6 characters long</li>
+                            <li>Mix of uppercase & lowercase letters</li>
+                            <li>Include numbers and symbols</li>
+                        </ul>
+                    </div>
+
+                    <button type="submit" class="submit-btn-auth">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="{{ url_for('login') }}">Sign in here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggleAuth');
+        const body = document.body;
+        const themeName = 'spamguard-theme';
+        const savedTheme = localStorage.getItem(themeName) || 'light';
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-theme');
+                body.classList.remove('light-theme');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                body.classList.add('light-theme');
+                body.classList.remove('dark-theme');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            localStorage.setItem(themeName, theme);
+        }
+
+        applyTheme(savedTheme);
+
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = localStorage.getItem(themeName) || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            applyTheme(newTheme);
+        });
+    </script>
+</body>
+</html>

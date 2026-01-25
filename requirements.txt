@@ -1,5 +1,11 @@
 Flask
+Flask-SQLAlchemy
+Flask-Login
 scikit-learn
 numpy
 pandas
 nltk
+Werkzeug
+psycopg2-binary
+python-dotenv
+gunicorn
