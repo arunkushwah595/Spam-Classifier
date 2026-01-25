@@ -8,4 +8,3 @@ nltk
 Werkzeug
 psycopg2-binary
 python-dotenv
-gunicorn
